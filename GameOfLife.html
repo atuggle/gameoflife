@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Game of Life</title>
+</head>
+<body>
+    <div id="lifeBoard"></div>
+    <script src="gameOfLife.js"></script>
+    <script src="tests.js"></script>
+    <script src="jquery-1.9.1.min.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        this.DrawLife = function DrawLife() {
+            for (var row = 1; row < this.widthX + 1; row++) {
+                for (var col = 1; col < this.heightY + 1; col++) {
+                    this.DrawLifePoint(row, col)
+                }
+            }
+        };
+
+        this.DrawLifePoint = function DrawLifePoint(row, col) {
+            if (row > 0 && row <= this.widthX &&
+                col > 0 && col <= this.heightY &&
+                (!this.oldLifeBoard || this.life[row][col] != this.oldlife[row][col])) {
+
+                var n = 256 - this.life[row][col];
+                var r = this.life[row][col] - 1;
+                this.ctx.fillStyle = this.lifeBoard[row][col] > 0 ? "rgb(" + r + "," + n + ",0)" : "rgb(255,255,255)";
+                row--;
+                col--;
+
+                //this.ctx.fillRect(e * this.scale + i, t * this.scale + i, this.scale - i, this.scale - i);
+            }
+        };
+
+        this.live = function live() {
+            this.timer = setInterval(function () { this.tick() }, 500)
+        };
+
+        this.die = function die() {
+            clearInterval(this.timer);
+        };
+    </script>
+</body>
+</html>
